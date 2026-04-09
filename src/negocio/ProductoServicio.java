@@ -14,28 +14,26 @@ public class ProductoServicio implements IProductoServicio {
 
     @Override
     public void agregar(Producto producto) {
-        // TODO: implementar
+        productoDAO.agregar(producto);
     }
 
     @Override
     public Producto buscarPorId(int id) {
-        // TODO: implementar
-        return null;
+        return productoDAO.buscarPorId(id);
     }
 
     @Override
     public List<Producto> listarTodos() {
-        // TODO: implementar
-        return null;
+        return productoDAO.listarTodos();
     }
 
     @Override
     public void actualizar(Producto producto) {
-        // TODO: implementar
+        productoDAO.actualizar(producto);
     }
 
     @Override
     public void eliminar(int id) {
-        // TODO: implementar
+        productoDAO.eliminar(id);
     }
 }
