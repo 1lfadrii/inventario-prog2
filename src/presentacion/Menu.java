@@ -68,9 +68,12 @@ public class Menu {
         System.out.print("Precio: ");
         double precio = leerDouble("INGRESE UN NÚMERO DE PRECIO");
 
-        Producto producto = new Producto(id, nombre, cantidad, precio);
-        servicio.agregar(producto);
-        System.out.println("  Producto registrado correctamente.");
+        try {
+            servicio.agregar(new Producto(id, nombre, cantidad, precio));
+            System.out.println("  Producto registrado correctamente.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("  Error: " + e.getMessage());
+        }
     }
 
     private void listarProductos() {
@@ -94,14 +97,14 @@ public class Menu {
         System.out.print("ID a buscar: ");
         int id = leerInt("INGRESE EL NÚMERO DE ID");
 
-        Producto p = servicio.buscarPorId(id);
-        if (p != null) {
+        try {
+            Producto p = servicio.buscarPorId(id);
             System.out.println(String.format("  %-5s %-20s %-10s %-10s", "ID", "Nombre", "Cantidad", "Precio"));
             System.out.println("  " + "-".repeat(47));
             System.out.println(String.format("  %-5d %-20s %-10d %-10.2f",
                     p.getId(), p.getNombre(), p.getCantidad(), p.getPrecio()));
-        } else {
-            System.out.println("  Producto no encontrado ):");
+        } catch (IllegalArgumentException e) {
+            System.out.println("  Error: " + e.getMessage());
         }
     }
 
@@ -116,9 +119,12 @@ public class Menu {
         System.out.print("Nuevo precio: ");
         double precio = leerDouble("INGRESE UN NÚMERO DE PRECIO");
 
-        Producto producto = new Producto(id, nombre, cantidad, precio);
-        servicio.actualizar(producto);
-        System.out.println("  Producto actualizado correctamente.");
+        try {
+            servicio.actualizar(new Producto(id, nombre, cantidad, precio));
+            System.out.println("  Producto actualizado correctamente.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("  Error: " + e.getMessage());
+        }
     }
 
     private void eliminarProducto() {
@@ -126,8 +132,12 @@ public class Menu {
         System.out.print("ID del producto a eliminar: ");
         int id = leerInt("  INGRESE EL NÚMERO DE ID");
 
-        servicio.eliminar(id);
-        System.out.println("  Producto eliminado correctamente.");
+        try {
+            servicio.eliminar(id);
+            System.out.println("  Producto eliminado correctamente.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("  Error: " + e.getMessage());
+        }
     }
 
     private int leerInt(String mensajeError) {
