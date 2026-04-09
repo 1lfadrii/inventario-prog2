@@ -1,0 +1,152 @@
+Hola, estoy en un curso de Programación II en Java. Necesito crear un proyecto básico de inventario desde cero, por ahora solo quiero que me crees la estructura de carpetas y archivos 
+vacíos del proyecto usando arquitectura por capas:
+
+-src/entidades/Producto.java
+-src/datos/IProductoDAO.java
+-src/datos/ProductoDAO.java
+-src/negocio/IProductoServicio.java
+-src/negocio/ProductoServicio.java
+-src/presentacion/Menu.java
+-src/Main.java
+-datos/productos.txt (un archivo vacío)
+
+La clase Producto debe tener los atributos: id (con int), nombre (con String), 
+cantidad (cont int), precio (con double). Con constructores necesarios, getters, setters y 
+toString(). Peeeero sin logica todavia, solo la estructura.
+
+R/ Me creó todos los archivos con la estructura que le pedí. Una clase Producto
+completa con todos los atributos y metodos pedidos. Las demás clases
+quedaron con los métodos vacíos como le dije, me ayudó en el esqueleto completo del proyecto.
+
+perfecto, ahora necesito implementar la lectura y escritura de productos 
+en un archivo txt, en src/datos/ProductoDAO.java implementa estos dos metodos privados de utilidad:
+
+List<Producto> leerTodos(): lee línea por línea el archivo de productos.txt y convierte cada línea en un objeto Producto
+void guardarTodos(List<Producto> productos): sobrescribe el archivo completo con la lista actual
+
+El formato de cada línea en el txt debe ser: id,nombre,cantidad,precio
+
+Ejemplo (no añadir al codigo):
+1, laptop ,5, 1200.00
+2, mouse, 20, 15.50
+
+Usa bufferedreader y bufferedwriter, y aneja las excepciones con try-catch mostrando un error, no me agregues lógica de negocio aquí todavía, solo lectura y escritura del archivo.
+
+Me generó los dos métodos privados con bufferedreader y bufferedwriter
+como pedí. leerTodos() sí divide cada línea por comas. guardarTodos() si cumple con recorrer la lista y escribe cada producto en una linea con el formato correcto. Los errores
+los maneja mostrando un mensaje en consola, me ayudó a que productos.txt sea donde se guarde la información.
+
+Ahora necesito implementar los primeros dos métodos del CRUD en src/datos/ProductoDAO.java, siguiendo la interfaz IProductoDAO.
+
+Primero actualiza IProductoDAO.java con esto:
+void agregar(Producto producto)
+List<Producto> listarTodos()
+Producto buscarPorId(int id)
+void actualizar(Producto producto)
+void eliminar(int id)
+
+Luego en ProductoDAO.java implementa solo estos dos por ahora:
+
+1. agregar(Producto producto): lee todos los productos del archivo, agrega el nuevo al final de la lista y guarda todos de vuelta
+
+2. listarTodos(): simplemente retorna leerTodos()
+
+Los otros tres métodos déjalos con cuerpo vacío o retornando null por ahora, no me toques las otras clases todavía
+
+Me implementó agregar() en tres líneas usando leerTodos() y guardarTodos()
+que ya existían, y listarTodos() en una sola línea, los otros métodos los dejó sin tocar con sus como le pedí.
+
+Ahora completa los tres metodos que me faltan en ProductoDAO.java:
+1. buscarPorId(int id) que llama leerTodos() y recorre la lista buscando el producto con el id que  coincida y retorna el producto encontrado, o null si no existe, con un mensaje de atención 
+
+2. actualizar(Producto producto), llama leerTodos(), luego recorre la lista y reemplaza el producto con su respectivo id con el producto recibido, leugo llama guardarTodos() con la lista actualizada
+
+3. eliminar(int id): llama leerTodos() y elimina de la lista el producto cuyo id coincida, después llama guardarTodos() con la lista actualizada otra vvez
+
+No agregues lógica de negocio aquí. Solo operaciones directas 
+sobre la lista y el archivo. No me toques las otras clases todavía.
+
+Me generó los tres métodos usando leerTodos() y guardarTodos() de base.
+Puso lo de actualizar y eliminar y en los tres casos muestra un mensaje si no
+encuentra el id, me completó el CRUD completo en la capa de datos.
+
+Ahora sí necesito implementar la capa de presentación del sistema, sé creativo e ingenioso :)
+
+En src/presentacion/Menu.java:
+Aquí agrega: IProductoServicio servicio = new ProductoServicio(), y un menú que muestre estas opciones:
+
+Registrar producto
+Listar productos
+Buscar producto por ID
+Actualizar producto
+Eliminar producto
+Salir
+
+Implementa cada opción llamando al servicio correspondiente
+Para poder registrar un producto nuevo: pide el id, nombre, cantidad y precio por la consola, con los datos obtenidos crea el objeto Producto y llama servicio.agregar()
+
+Para listar los productos registrados: solamente llama servicio.listarTodos() y muestra cada producto
+
+Para buscar un producto: pide un id y muestra el producto que conincida con el id, sino "Producto no encontrado ):"
+
+Para actualizar: pide el id y luego los nuevos datos, y llama servicio.actualizar()
+
+Para eliminar: solo pide el id y llama servicio.eliminar()
+Sin validaciones todavia ninguno
+
+Me generó el diseño visual del menú usando los caracteres especiales para
+los bordes del menú. Cada opción tiene su propio método privado como le dije y para listar
+productos muestra los datos en columnas con formato. Aquí me ayudó en toda la capa de presentación. Por que con eso el sistema ya era ejecutable
+y se podía interactuar con él desde consola
+
+Ahora sí necesito agregar validaciones en ProductoServicio.java.
+Necesito que no toques el DAO ni la presentación tampoco.
+Agrega estas validaciones en cada método:
+
+1. agregar(Producto producto)
+el id debe ser mayor a 0
+el nombre no puede estar vacío
+la cantidad no puede ser negativa
+el precio debe ser mayor a 0
+verificar que no exista ya un producto con el mismo id
+y si algo de esto falla lanza un error con mensaje claro
+
+2. buscarPorId(int id)
+el id debe ser mayor a 0
+si no existe lanza un ("Producto no encontrado ):")
+
+3. actualizar(Producto producto)
+mismas validaciones que agregar excepto la del id duplicado y verificar que el producto sí exista antes de actualizar
+
+4. eliminar(int id)
+el id debe ser mayor a 0 y que verifique que el producto exista antes de eliminar
+
+Me generó las validaciones en el servicio con mensajes buenos descriptivos, y en
+el menú agrego try-catch en cada método privado que llama al servicio, me atudó en la capa de negocio principalmente, y también en la presentación paraque los errores se muestren amigables en lugar de romperme todo el programa.
+
+Vamos bien, ahora necesito crear dos manuales en formato markdown para el proyecto.
+
+1. Crea MANUAL_USUARIO.md que explique:
+- Para qué sirve el sistema
+- Cómo ejecutar el programa desde vs Code
+- Cómo usar cada opción del menú del 1 al 5 junto con un ejemplo completo paso a paso: registrar un producto, buscarlo y luego eliminarlo
+- Qué pasa si el usuario ingresa datos incorrectos
+
+2. Crea MANUAL_TECNICO.md que explique:
+- Cómo esta organizado el proyecto en carpetas
+- Para qué sirve cada capa y paquete (entidades, datos, negocio, presentación)
+- Para qué sirve cada archivo .java
+- Cómo viaja la información desde el menú hasta el archivo txt
+- Por qué se usaron interfaces
+- Por qué se eligió guardar los datos en un txt
+
+Me generó los dos manuales tal cual se los pedí en formato markdown
+
+Necesito un diagrama de clases UML para mi proyecto, como lo hago?
+
+Me recomendó usar "PlantUML"y me generó un codigo para pasarlo a formato visual
+
+
+
+
+
